@@ -44,4 +44,4 @@ def login():
         return jsonify({"message": "invalied pwd", "status": 400})
     elif state == "undefined id":
         return jsonify({"message": "account unexisted", "status": 404})
-    return jsonify()  # 해당 아이디에 해당하는 값 return
+    return jsonify(state)  # 해당 아이디에 해당하는 값 return

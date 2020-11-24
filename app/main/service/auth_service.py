@@ -37,7 +37,7 @@ def user_login(id, pwd):
             if len(entry) == 0:  # 로그인 실패
                 return "pwd is defferent"
             else:
-                return True  # 로그인 성공
+                return entry  # 로그인 성공
     except Exception as err:
         print("Error Log: [{}]".format(err))
         return False
