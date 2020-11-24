@@ -6,54 +6,41 @@ from ...db import db_session
 def user_signup(id, pwd, school, number, name):
     try:
         if find_id(id):  # 이미 있는 아이디
-            print("defind")
-            return "defind id"
+            print("defined")
+            return "defined id"
 
         else:  # 회원가입 진행
             table = USERS_TB(id=id, pwd=pwd, school=school, number=number, name=name)
             db_session.add(table)
             db_session.commit()
-            return jsonify({"id": entry[0]['id'], 
-                            "school": entry[0]['school'], 
-                            "number" : entry[0]['number'], 
-                            "name" : entry[0]['name']
-            }) # 회원가입 성공
+            return True  # 회원가입 성공
             # return "success"  # 회원가입 성공
 
     except Exception as err:
         print("Error Log: [{}]".format(err))
-        return "fail"
+        return False
 
 
 def user_login(id, pwd):
     try:
         if not find_id(id):  # 없는 아이디로 로그인
-            return "undefind id"
+            return "undefined id"
         else:
             queries = (
                 db_session.query(USERS_TB)
                 .filter(USERS_TB.id == id)
                 .filter(USERS_TB.pwd == pwd)
             )
-<<<<<<< HEAD
-            entry = [dict(id=q.id, pwd=q.pwd) for q in queries]
-=======
-            print(queries)
-            entry = [dict(id=q.id, pwd=q.pwd, number=q.number, name=q.name) for q in queries]
->>>>>>> a43cc3722c7a2a9ecc619d0701e375ad41040a02
+            entry = [
+                dict(id=q.id, pwd=q.pwd, number=q.number, name=q.name) for q in queries
+            ]
             if len(entry) == 0:  # 로그인 실패
-                return "fail"
+                return "pwd is defferent"
             else:
-                return jsonify({"id" : entry[0]['id'], 
-                                "school" : entry[0]['school'],
-                                "number" : entry[0]['number'], 
-                                "name" : entry[0]['name']
-                }) # 로그인 성공
-                # return "success" 
-
+                return True  # 로그인 성공
     except Exception as err:
         print("Error Log: [{}]".format(err))
-        return "fail"
+        return False
 
 
 def find_id(id):  # 아이디가 있으면 return 1, 없으면 return 0
