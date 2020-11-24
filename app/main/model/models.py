@@ -19,7 +19,7 @@ class USERS_TB(Base):
 class CONCENTRATION_TB(Base):
     __tablename__ = "CONCENTRATION_TB"
 
-    idx = Column(Integer, autoincrement=True)
+    idx = Column(Integer, autoincrement=True, primary_key=True)
     id = Column(String(30), ForeignKey("USERS_TB.id"), nullable=False)
     phone = Column(Integer, nullable=False)
     sleep = Column(Integer, nullable=False)
@@ -34,3 +34,12 @@ class CONCENTRATION_TB(Base):
         self.eating = eating
         self.concentration = concentration
         self.created_at = created_at
+
+
+class APPACCESS_TB(Base):
+    __tablename__ = "APPACCESS_TB"
+
+    app_name = Column(String(100), primary_key=True)
+
+    def __init__(self, app_name):
+        self.app_name = app_name
