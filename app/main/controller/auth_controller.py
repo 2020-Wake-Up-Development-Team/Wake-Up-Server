@@ -1,3 +1,4 @@
+import re
 from flask import Flask, request, Blueprint, jsonify
 from ..service import auth_service
 
@@ -8,9 +9,15 @@ api = Blueprint("auth", __name__, url_prefix="/auth")
 @api.route("/signup", methods=["POST"])  # 회원가입
 def signup():
     data = request.get_json()  # 데이터 받기
+    if not "-" in data["class"]:
+        return jsonify({"message": "class format isn't right"})
 
     state = auth_service.user_signup(
-        data["user_id"], data["password"], data["school"], data["number"], data["name"]
+        data["id"],
+        data["pwd"],
+        data["school"],
+        data["class"].replace("-", ""),
+        data["name"],
     )  # 회원가입 함수
 
     if state == "success":
@@ -27,7 +34,7 @@ def signup():
 def login():
     data = request.get_json()  # 데이터 받기
 
-    state = auth_service.user_login(data["user_id"], data["password"])  # 로그인 함수
+    state = auth_service.user_login(data["id"], data["pwd"])  # 로그인 함수
 
     if state == "success":
         return jsonify({"code": 200, "message": "login success"})  # 로그인 성공
