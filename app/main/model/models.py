@@ -1,3 +1,4 @@
+from flask.ext.bcrypt import Bcrypt
 from sqlalchemy import Column, String, Integer, Date, ForeignKey
 from sqlalchemy.orm import relationship
 from ...db import Base
@@ -44,6 +45,8 @@ class APPACCESS_TB(Base):
     __tablename__ = "APPACCESS_TB"
 
     app_name = Column(String(100), primary_key=True)
+    app_path = Column(String(150))
 
-    def __init__(self, app_name):
+    def __init__(self, app_name, app_path):
         self.app_name = app_name
+        self.app_logo = app_path
