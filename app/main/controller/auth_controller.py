@@ -1,5 +1,5 @@
 import re
-from flask import Flask, request, Blueprint, jsonify
+from flask import Flask, request, Blueprint, jsonify, Response
 from ..service import auth_service
 
 
@@ -20,9 +20,9 @@ def signup():
         data["name"],
     )  # 회원가입 함수
     if not state:
-        return jsonify({"message": "Error occured"})
+        return Response({"message": "Error occured"}, status=400)
     elif state == "defined id":
-        return jsonify({"message": "account already existed"})
+        return Response({"message": "account already existed"}, status=400)
     return jsonify(
         {
             "id": data["id"],
@@ -39,9 +39,9 @@ def login():
 
     state = auth_service.user_login(data["id"], data["pwd"])  # 로그인 함수
     if not state:
-        return jsonify({"status": 400})
+        return Response(status=404)
     if state == "pwd is defferent":
-        return jsonify({"message": "invalied pwd", "status": 400})
+        return Response({"message": "invalied pwd"}, status=400)
     elif state == "undefined id":
-        return jsonify({"message": "account unexisted", "status": 404})
+        return Response({"message": "account unexisted"}, status=404)
     return jsonify(state)  # 해당 아이디에 해당하는 값 return
