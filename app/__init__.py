@@ -16,12 +16,14 @@ def create_app(testconfig=None):
     from .main.controller import (
         auth_controller,
         concentration_controller,
-        meeting_controller,
+        video_analysis,
+        denied_app_controller,
     )
 
     app.register_blueprint(auth_controller.api)
     app.register_blueprint(concentration_controller.api)
-    app.register_blueprint(meeting_controller.api)
+    app.register_blueprint(video_analysis.api)
+    app.register_blueprint(denied_app_controller.api)
 
     db.init_app(app)
 
