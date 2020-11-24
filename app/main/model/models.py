@@ -26,17 +26,17 @@ class CONCENTRATION_TB(Base):
 
     idx = Column(Integer, autoincrement=True, primary_key=True)
     id = Column(String(30), ForeignKey("USERS_TB.id"), nullable=False)
+    full_frame = Column(Integer, nullable=False)
     phone = Column(Integer, nullable=False)
     sleep = Column(Integer, nullable=False)
-    eating = Column(Integer, nullable=False)
     concentration = Column(Integer, nullable=False)
     created_at = Column(Date, nullable=False)
 
-    def __init__(self, id, phone, sleep, eating, concentration, created_at):
+    def __init__(self, id, phone, full_frame, sleep, concentration, created_at):
         self.id = id
+        self.full_frame = full_frame
         self.phone = phone
         self.sleep = sleep
-        self.eating = eating
         self.concentration = concentration
         self.created_at = created_at
 

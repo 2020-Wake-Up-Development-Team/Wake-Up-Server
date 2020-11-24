@@ -31,9 +31,13 @@ def user_login(id, pwd):
                 .filter(USERS_TB.id == id)
                 .filter(USERS_TB.pwd == pwd)
             )
-            entry = [
-                dict(id=q.id, pwd=q.pwd, number=q.number, name=q.name) for q in queries
-            ]
+            query = queries[0]
+            entry = dict(
+                id=query.id,
+                school=query.school,
+                number="{}-{}".format(str(query.number)[0], str(query.number[1])),
+                name=query.name.encode().decode("utf-8"),
+            )
             if len(entry) == 0:  # 로그인 실패
                 return "pwd is defferent"
             else:
@@ -46,7 +50,7 @@ def user_login(id, pwd):
 def find_id(id):  # 아이디가 있으면 return 1, 없으면 return 0
     try:
         queries = db_session.query(USERS_TB).filter(USERS_TB.id == id)
-        entry = [dict(id=q.id, pwd=q.pwd) for q in queries]
+        entry = dict(id=queries[0].id, pwd=queries[0].pwd)
         if len(entry) == 0:
             return False  # 아이디 X
         else:
