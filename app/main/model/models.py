@@ -1,5 +1,6 @@
 from flask.ext.bcrypt import Bcrypt
 from sqlalchemy import Column, String, Integer, Date, ForeignKey
+from sqlalchemy.dialects.mysql import LONGBLOB
 from sqlalchemy.orm import relationship
 from ...db import Base
 
@@ -45,8 +46,8 @@ class APPACCESS_TB(Base):
     __tablename__ = "APPACCESS_TB"
 
     app_name = Column(String(100), primary_key=True)
-    app_path = Column(String(150))
+    app_logo = Column(LONGBLOB, nullable=False)
 
-    def __init__(self, app_name, app_path):
+    def __init__(self, app_name, app_logo):
         self.app_name = app_name
-        self.app_logo = app_path
+        self.app_logo = app_logo
