@@ -13,7 +13,12 @@ def user_signup(id, pwd, school, number, name):
             table = USERS_TB(id=id, pwd=pwd, school=school, number=number, name=name)
             db_session.add(table)
             db_session.commit()
-            return "success"  # 회원가입 성공
+            return jsonify({"id": entry[0]['id'], 
+                            "school": entry[0]['school'], 
+                            "number" : entry[0]['number'], 
+                            "name" : entry[0]['name']
+            }) # 회원가입 성공
+            # return "success"  # 회원가입 성공
 
     except Exception as err:
         print("Error Log: [{}]".format(err))
@@ -30,11 +35,21 @@ def user_login(id, pwd):
                 .filter(USERS_TB.id == id)
                 .filter(USERS_TB.pwd == pwd)
             )
+<<<<<<< HEAD
             entry = [dict(id=q.id, pwd=q.pwd) for q in queries]
+=======
+            print(queries)
+            entry = [dict(id=q.id, pwd=q.pwd, number=q.number, name=q.name) for q in queries]
+>>>>>>> a43cc3722c7a2a9ecc619d0701e375ad41040a02
             if len(entry) == 0:  # 로그인 실패
                 return "fail"
             else:
-                return "success"  # 로그인 성공
+                return jsonify({"id" : entry[0]['id'], 
+                                "school" : entry[0]['school'],
+                                "number" : entry[0]['number'], 
+                                "name" : entry[0]['name']
+                }) # 로그인 성공
+                # return "success" 
 
     except Exception as err:
         print("Error Log: [{}]".format(err))
