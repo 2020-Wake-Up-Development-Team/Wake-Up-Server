@@ -1,4 +1,5 @@
 from sqlalchemy import Column, String, Integer, Date, ForeignKey
+from sqlalchemy.dialects.mysql import LONGBLOB
 from sqlalchemy.orm import relationship
 from ...db import Base
 
@@ -7,12 +8,16 @@ class USERS_TB(Base):
     __tablename__ = "USERS_TB"
 
     id = Column(String(30), primary_key=True)
+    pwd = Column(String(100), primary_key=True)
     school = Column(String(30), nullable=False)
+    number = Column(Integer, nullable=True)
     name = Column(String(10), nullable=False)
 
-    def __init__(self, user_id, school, name):
-        self.user_id = user_id
+    def __init__(self, id, pwd, school, number, name):
+        self.id = id
+        self.pwd = pwd
         self.school = school
+        self.number = number
         self.name = name
 
 
@@ -40,6 +45,8 @@ class APPACCESS_TB(Base):
     __tablename__ = "APPACCESS_TB"
 
     app_name = Column(String(100), primary_key=True)
+    app_logo = Column(LONGBLOB, nullable=False)
 
-    def __init__(self, app_name):
+    def __init__(self, app_name, app_logo):
         self.app_name = app_name
+        self.app_logo = app_logo
