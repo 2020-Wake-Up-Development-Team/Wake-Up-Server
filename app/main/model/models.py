@@ -1,4 +1,3 @@
-from flask.ext.bcrypt import Bcrypt
 from sqlalchemy import Column, String, Integer, Date, ForeignKey
 from sqlalchemy.dialects.mysql import LONGBLOB
 from sqlalchemy.orm import relationship

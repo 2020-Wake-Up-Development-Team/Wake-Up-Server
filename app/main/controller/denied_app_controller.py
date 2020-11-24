@@ -15,7 +15,7 @@ def get_denied_app():
 @api.route("", methods=["POST"])
 def add_denied_app():
     data = request.get_json()
-    result = denied_app_service.insert_data(data["app_name"])
+    result = denied_app_service.insert_data(data["app_name"], data["app_logo"].encode())
     if result == "already exist":
         return jsonify({"message": "{} is already existed".format(data["app_name"])})
     elif not result:
